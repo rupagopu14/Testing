@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- <script src="./Script.js"></script> -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NEW REGISTRATION FORM</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #f3ebf6;
+      }
+      .container {
+        margin: 10px 50px;
+      }
+      .form-group {
+        margin: 10px;
+      }
+      input {
+        width: 100%;
+        border: solid 1px #eee;
+        padding: 15px 10px;
+      }
+      button {
+        width: 200px;
+        padding: 15px;
+        margin-left: 250px;
+        background: #fff;
+        color: rgb(30, 45, 59);
+        border: solid 1px rgb(29, 48, 66);
+        cursor: pointer;
+        transition: all 0.38s ease-in-out;
+      }
+      button:hover {
+        background: rgb(47, 75, 102);
+        color: #fff;
+      }
+      table tr td {
+        border: solid 1px #eee;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>NEW REGISTRATION FORM</h2>
+      <form role="form" onsubmit="signUp(event);">
+        <div class="form-group">
+          <input type="text" name="fname" id="fname" placeholder="First Name" />
+        </div>
+        <div class="form-group">
+          <input type="text" name="lname" id="lname" placeholder="Last Name" />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            name="address"
+            id="address"
+            placeholder="address"
+          />
+        </div>
+        <div class="form-group">
+          <input type="text" name="city" id="city" placeholder="city" />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            name="province"
+            id="province"
+            placeholder="province"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            name="postal-code"
+            id="postal-code"
+            placeholder="postal code"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            name="phone-number"
+            id="phone-number"
+            placeholder="phone number"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="text"
+            name="email"
+            id="email"
+            placeholder="Email Address"
+          />
+        </div>
+        <div class="form-group">
+          <input
+            type="Notes field"
+            name="notes-field"
+            id="notes-field"
+            placeholder="notes"
+          />
+        </div>
+        <div class="form-group">
+          <button type="submit">Save</button>
+          <a href="Search.html">Clicked here to view Saved Data</a>
+        </div>
+      </form>
+    </div>
+
+    <script type="text/javascript">
+      const signUp = (e) => {
+        let emptyfield = false;
+        let postalFlag = false;
+        let phoneFlag = false;
+        let emailFlag = false;
+        var fname = document.getElementById("fname");
+        var lname = document.getElementById("lname");
+        var address = document.getElementById("address");
+        var city = document.getElementById("city");
+        var province = document.getElementById("province");
+        var postalCode = document.getElementById("postal-code");
+        var phoneNumber = document.getElementById("phone-number");
+        var email = document.getElementById("email");
+        var notes = document.getElementById("notes-field");
+        var postalCodeRegex =
+          /^(\d{​​​​​​​​5}​​​​​​​​(-\d{​​​​​​​​4}​​​​​​​​)?|\d[A-Z]\d ?[A-Z]\d[A-Z])$/;
+        var phoneNumberRegex = /^(\d{3}-)\d{3}-\d{4}$/;
+        var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+        if (fname.value !== "") {
+          if (lname.value !== "") {
+            if (address.value !== "") {
+              if (city.value !== "") {
+                if (province.value !== "") {
+                  if (postalCode.value !== "") {
+                    if (phoneNumber.value !== "") {
+                      if (email.value !== "") {
+                        if (notes.value !== "") {
+                          emptyfield = true;
+                          if (postalCodeRegex.test(postalCode.value)) {
+                            postalFlag = true;
+                          }
+                          if (phoneNumberRegex.test(phoneNumber.value)) {
+                            phoneFlag = true;
+                          }
+                          if (emailRegex.test(email.value)) {
+                            emailFlag = true;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        if (emptyfield) {
+          if (postalFlag) {
+            if (phoneFlag) {
+              if (emailFlag) {
+                let formData =
+                  JSON.parse(localStorage.getItem("formData")) || [];
+                let exist =
+                  formData.length &&
+                  JSON.parse(localStorage.getItem("formData")).some(
+                    (data) =>
+                      data.fname.toLowerCase() ==
+                        document.getElementById("fname").value.toLowerCase() &&
+                      data.lname.toLowerCase() ==
+                        document.getElementById("lname").value.toLowerCase()
+                  );
+                if (!exist) {
+                  formData.push({
+                    fname: document.getElementById("fname").value,
+                    lname: document.getElementById("lname").value,
+                    address: document.getElementById("address").value,
+                    city: document.getElementById("city").value,
+                    province: document.getElementById("province").value,
+                    postal: document.getElementById("postal-code").value,
+                    phonenumber: document.getElementById("phone-number").value,
+
+                    email: document.getElementById("email").value,
+                    notesfield: document.getElementById("notes-field").value,
+                  });
+
+                  localStorage.setItem("formData", JSON.stringify(formData));
+                  // console.log(localStorage.getItem('formData'));
+                  //dispData();
+                  document.querySelector("form").reset();
+                  //document.getElementById('fname').focus();
+                } else {
+                  alert(
+                    "Alert: Duplicate found!!!\nYou have already Registered"
+                  );
+                }
+              } else {
+                alert("Invalid Email Format.");
+              }
+            } else {
+              alert("Invalid Phone Number Format.");
+            }
+          } else {
+            alert("Invalid Postal Code Format.");
+          }
+        } else {
+          alert("All Fields are mandatory.");
+        }
+        e.preventDefault();
+      };
+    </script>
+  </body>
+</html>
