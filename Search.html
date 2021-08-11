@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Search</title>
+        <link href="search.css" rel="stylesheet" type="text/css">
+    </head>
+<body>
+    
+    <form>
+        
+        <h2>MY INFO</h2>
+        <div id="output">
+            <table>
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>address</th>
+                        <th>city</th>
+                        <th>province</th>
+                        <th>postal code</th>
+                        <th>phone number</th>
+                        <th>Email Address</th>
+                        <th>notes field</th>
+                        
+                    </tr>
+                    
+                </thead>
+               
+                    <td>
+                                 <input type="button" value="Delete" class="delete" onclick="delete_row('1')">
+                                 </td>
+            </table>
+       
+        </div>
+    </form>
+    <table>
+        <script>
+            
+            function dispData(){
+                console.log(localStorage.getItem('formData'));
+                if(localStorage.getItem('formData')){
+                    var output = document.querySelector('tbody');
+                    output.innerHTML = "";
+                    JSON.parse(localStorage.getItem('formData')).forEach(data => {
+                        output.innerHTML += `
+                
+                                <tr>
+                                    <td>${data.fname}</td>
+                                    <td>${data.lname}</td>
+                                    <td>${data.address}</td>
+                                    <td>${data.city}</td>
+                                    <td>${data.province}</td>
+                                    <td>${data.postal}</td>
+                                    <td>${data.phonenumber}</td>
+                                    <td>${data.email}</td>
+                                    <td>${data.notesfield}</td>
+
+                                </tr>
+                               
+                                <br>
+
+       
+                        `;
+                    }); 
+                }
+            }
+
+            dispData()
+
+        </script>
+            <button onclick = "document.location='Home page.html'"class="Back Home">Back to Home</button>
+
+            </body>
+
+
+            </html>
